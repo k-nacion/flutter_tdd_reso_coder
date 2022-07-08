@@ -18,14 +18,14 @@ class CachedFailure extends Failure {
   }
 }
 
-class NetworkFailure extends Failure {
+/*class NetworkFailure extends Failure {
   const NetworkFailure([super.message]);
 
   @override
   String toString() {
     return 'NetworkFailure{message: ${super.message}';
   }
-}
+}*/
 
 class ServerFailure extends Failure {
   const ServerFailure([super.message]);

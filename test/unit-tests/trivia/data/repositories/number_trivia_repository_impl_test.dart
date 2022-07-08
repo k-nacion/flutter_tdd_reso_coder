@@ -54,7 +54,8 @@ void main() {
   void runOnline(void Function() body) {
     group('device is ONLINE', () {
       setUp(() {
-        when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
+        when(() => mockNetworkInfo.hasInternetConnection)
+            .thenAnswer((_) async => true);
       });
       body();
     });
@@ -62,7 +63,7 @@ void main() {
 
   void runOffline(void Function() body) {
     group('device is OFFLINE', () {
-      setUp(() => when(() => mockNetworkInfo.isConnected)
+      setUp(() => when(() => mockNetworkInfo.hasInternetConnection)
           .thenAnswer((_) async => false));
 
       body();
@@ -82,8 +83,8 @@ void main() {
 
           await repositorySUT.getConcreteNumberTrivia(tNumber);
 
-          expect(await mockNetworkInfo.isConnected, true);
-          verify(() => mockNetworkInfo.isConnected);
+          expect(await mockNetworkInfo.hasInternetConnection, true);
+          verify(() => mockNetworkInfo.hasInternetConnection);
         },
       );
 
@@ -99,8 +100,8 @@ void main() {
           final actual = await repositorySUT.getConcreteNumberTrivia(tNumber);
 
           expect(actual, tNumberTriviaSuccess);
-          expect(await mockNetworkInfo.isConnected, true);
-          verify(() => mockNetworkInfo.isConnected);
+          expect(await mockNetworkInfo.hasInternetConnection, true);
+          verify(() => mockNetworkInfo.hasInternetConnection);
           verify(() => mockRemoteDataSource.getConcreteNumberTrivia(tNumber))
               .called(1);
           verifyNever(() => mockRemoteDataSource.getRandomNumberTrivia());
@@ -118,8 +119,8 @@ void main() {
 
           final actual = await repositorySUT.getConcreteNumberTrivia(tNumber);
 
-          expect(await mockNetworkInfo.isConnected, true);
-          verify(() => mockNetworkInfo.isConnected);
+          expect(await mockNetworkInfo.hasInternetConnection, true);
+          verify(() => mockNetworkInfo.hasInternetConnection);
           verify(() => mockRemoteDataSource.getConcreteNumberTrivia(tNumber));
           verify(
               () => mockLocalDataSource.cacheNumberTrivia(tNumberTriviaModel));
@@ -138,9 +139,9 @@ void main() {
 
           final actual = await repositorySUT.getConcreteNumberTrivia(tNumber);
 
-          expect(await mockNetworkInfo.isConnected, true);
+          expect(await mockNetworkInfo.hasInternetConnection, true);
           expect(actual, tNumberTriviaServerFailure);
-          verify(() => mockNetworkInfo.isConnected);
+          verify(() => mockNetworkInfo.hasInternetConnection);
           verify(() => mockRemoteDataSource.getConcreteNumberTrivia(tNumber))
               .called(1);
           verifyNever(() => mockLocalDataSource.cacheNumberTrivia(any()));
@@ -159,9 +160,9 @@ void main() {
 
           final actual = await repositorySUT.getConcreteNumberTrivia(tNumber);
 
-          expect(await mockNetworkInfo.isConnected, true);
+          expect(await mockNetworkInfo.hasInternetConnection, true);
           expect(actual, tNumberTriviaCacheFailure);
-          verify(() => mockNetworkInfo.isConnected);
+          verify(() => mockNetworkInfo.hasInternetConnection);
           verify(() => mockRemoteDataSource.getConcreteNumberTrivia(tNumber))
               .called(1);
           verifyNever(() => mockRemoteDataSource.getRandomNumberTrivia());
@@ -181,9 +182,9 @@ void main() {
 
           final actual = await repositorySUT.getConcreteNumberTrivia(tNumber);
 
-          expect(await mockNetworkInfo.isConnected, false);
+          expect(await mockNetworkInfo.hasInternetConnection, false);
           expect(actual, tNumberTriviaSuccess);
-          verify(() => mockNetworkInfo.isConnected);
+          verify(() => mockNetworkInfo.hasInternetConnection);
           verifyZeroInteractions(mockRemoteDataSource);
           verify(() => mockLocalDataSource.getLastTrivia()).called(1);
           verifyNever(() => mockLocalDataSource.cacheNumberTrivia(any()));
@@ -198,9 +199,9 @@ void main() {
 
           final actual = await repositorySUT.getConcreteNumberTrivia(tNumber);
 
-          expect(await mockNetworkInfo.isConnected, false);
+          expect(await mockNetworkInfo.hasInternetConnection, false);
           expect(actual, tNumberTriviaCacheFailure);
-          verify(() => mockNetworkInfo.isConnected);
+          verify(() => mockNetworkInfo.hasInternetConnection);
           verify(() => mockLocalDataSource.getLastTrivia());
           verifyZeroInteractions(mockRemoteDataSource);
           verifyNever(() => mockLocalDataSource.cacheNumberTrivia(any()));
@@ -221,8 +222,8 @@ void main() {
 
           repositorySUT.getRandomNumberTrivia();
 
-          expect(await mockNetworkInfo.isConnected, true);
-          verify(() => mockNetworkInfo.isConnected);
+          expect(await mockNetworkInfo.hasInternetConnection, true);
+          verify(() => mockNetworkInfo.hasInternetConnection);
           verify(() => mockRemoteDataSource.getRandomNumberTrivia());
           verifyNever(
               () => mockRemoteDataSource.getConcreteNumberTrivia(any()));
@@ -239,9 +240,9 @@ void main() {
 
           final actual = await repositorySUT.getRandomNumberTrivia();
 
-          expect(await mockNetworkInfo.isConnected, true);
+          expect(await mockNetworkInfo.hasInternetConnection, true);
           expect(actual, tNumberTriviaSuccess);
-          verify(() => mockNetworkInfo.isConnected);
+          verify(() => mockNetworkInfo.hasInternetConnection);
           verify(() => mockRemoteDataSource.getRandomNumberTrivia()).called(1);
           verifyNever(
               () => mockRemoteDataSource.getConcreteNumberTrivia(any()));
@@ -258,9 +259,9 @@ void main() {
 
           final actual = await repositorySUT.getRandomNumberTrivia();
 
-          expect(await mockNetworkInfo.isConnected, true);
+          expect(await mockNetworkInfo.hasInternetConnection, true);
           expect(actual, tNumberTriviaSuccess);
-          verify(() => mockNetworkInfo.isConnected);
+          verify(() => mockNetworkInfo.hasInternetConnection);
           verify(() => mockRemoteDataSource.getRandomNumberTrivia());
           verifyNever(
               () => mockRemoteDataSource.getConcreteNumberTrivia(any()));
@@ -278,9 +279,9 @@ void main() {
 
           final actual = await repositorySUT.getRandomNumberTrivia();
 
-          expect(await mockNetworkInfo.isConnected, true);
+          expect(await mockNetworkInfo.hasInternetConnection, true);
           expect(actual, tNumberTriviaServerFailure);
-          verify(() => mockNetworkInfo.isConnected);
+          verify(() => mockNetworkInfo.hasInternetConnection);
           verify(() => mockRemoteDataSource.getRandomNumberTrivia()).called(1);
           verifyNever(
               () => mockRemoteDataSource.getConcreteNumberTrivia(any()));
@@ -296,9 +297,9 @@ void main() {
 
           final actual = await repositorySUT.getRandomNumberTrivia();
 
-          expect((await mockNetworkInfo.isConnected), true);
+          expect((await mockNetworkInfo.hasInternetConnection), true);
           expect(actual, tNumberTriviaCacheFailure);
-          verify(() => mockNetworkInfo.isConnected);
+          verify(() => mockNetworkInfo.hasInternetConnection);
           verify(() => mockRemoteDataSource.getRandomNumberTrivia());
           verifyNever(
               () => mockRemoteDataSource.getConcreteNumberTrivia(any()));
@@ -316,8 +317,8 @@ void main() {
 
           repositorySUT.getRandomNumberTrivia();
 
-          expect(await mockNetworkInfo.isConnected, false);
-          verify(() => mockNetworkInfo.isConnected);
+          expect(await mockNetworkInfo.hasInternetConnection, false);
+          verify(() => mockNetworkInfo.hasInternetConnection);
         },
       );
 
@@ -329,9 +330,9 @@ void main() {
 
           final actual = await repositorySUT.getRandomNumberTrivia();
 
-          expect(await mockNetworkInfo.isConnected, false);
+          expect(await mockNetworkInfo.hasInternetConnection, false);
           expect(actual, tNumberTriviaSuccess);
-          verify(() => mockNetworkInfo.isConnected);
+          verify(() => mockNetworkInfo.hasInternetConnection);
           verify(() => mockLocalDataSource.getLastTrivia()).called(1);
           verifyZeroInteractions(mockRemoteDataSource);
           verifyNever(() => mockLocalDataSource.cacheNumberTrivia(any()));
@@ -346,9 +347,9 @@ void main() {
 
           final actual = await repositorySUT.getRandomNumberTrivia();
 
-          expect(await mockNetworkInfo.isConnected, false);
+          expect(await mockNetworkInfo.hasInternetConnection, false);
           expect(actual, tNumberTriviaCacheFailure);
-          verify(() => mockNetworkInfo.isConnected);
+          verify(() => mockNetworkInfo.hasInternetConnection);
           verify(() => mockLocalDataSource.getLastTrivia());
           verifyNever(() => mockLocalDataSource.cacheNumberTrivia(any()));
           verifyZeroInteractions(mockRemoteDataSource);

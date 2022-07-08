@@ -24,7 +24,7 @@ void main() {
           when(() => mockInternetConnectionChecker.hasConnection)
               .thenAnswer((_) async => true);
 
-          final actual = await networkInfoImplSUT.isConnected;
+          final actual = await networkInfoImplSUT.hasInternetConnection;
 
           expect(actual, isTrue);
           verify(() => mockInternetConnectionChecker.hasConnection);

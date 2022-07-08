@@ -35,7 +35,7 @@ class NumberTriviaRepositoryImpl extends NumberTriviaRepository {
   Future<Either<Failure, NumberTrivia>> _delegateRepositoryCaller(
       Future<NumberTriviaModel> Function() body) async {
     try {
-      if (!await _networkInfo.isConnected) {
+      if (!await _networkInfo.hasInternetConnection) {
         return Right(await _localDataSource.getLastTrivia());
       }
 
@@ -44,7 +44,7 @@ class NumberTriviaRepositoryImpl extends NumberTriviaRepository {
         _localDataSource.cacheNumberTrivia(remoteData);
         return Right(remoteData);
       } on ServerException {
-        return const Left(ServerFailure());
+        return const Left((ServerFailure()));
       }
     } on CachedException {
       return const Left(CachedFailure());
