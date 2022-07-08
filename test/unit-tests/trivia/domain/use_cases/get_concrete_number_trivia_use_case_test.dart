@@ -23,7 +23,7 @@ void main() {
         Right(NumberTrivia(text: 'sample', number: 1));
     const tNumber = 1;
     test(
-      'should get a number trivia successfully after giving an integer value in arguments',
+      'should return NumberTrivia successfully from the repository',
       () async {
         when(() => mockNumberTriviaRepository.getConcreteNumberTrivia(any()))
             .thenAnswer((invocation) async => tNumberTrivia);
