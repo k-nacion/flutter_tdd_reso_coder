@@ -10,7 +10,7 @@ class GetRandomNumberTriviaUseCase extends UseCase<NumberTrivia, void> {
   const GetRandomNumberTriviaUseCase(this._repository);
 
   @override
-  Future<Either<Failure, NumberTrivia>> call(void param) async {
+  Future<Either<Failure, NumberTrivia>> call([void param]) async {
     return await _repository.getRandomNumberTrivia();
   }
 }

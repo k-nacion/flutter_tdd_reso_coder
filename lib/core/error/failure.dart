@@ -35,3 +35,12 @@ class ServerFailure extends Failure {
     return 'ServerFailure{message: ${super.message}';
   }
 }
+
+class InvalidInputFailure extends Failure {
+  const InvalidInputFailure([super.message]);
+
+  @override
+  String toString() {
+    return 'InvalidInputFailure{message: ${super.message}';
+  }
+}
