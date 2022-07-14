@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tdd_reso_coder/injection_container.dart';
+import 'package:flutter_tdd_reso_coder/trivia/presentation/bloc/internet_status/internet_status_bloc.dart';
 import 'package:flutter_tdd_reso_coder/trivia/presentation/bloc/number_trivia/number_trivia_bloc.dart';
 import 'package:flutter_tdd_reso_coder/trivia/presentation/bloc/text_form/text_form_cubit.dart';
 import 'package:flutter_tdd_reso_coder/trivia/presentation/widgets/input_area.dart';
@@ -20,6 +21,7 @@ class NumberTriviaPage extends StatelessWidget {
       body: MultiBlocProvider(
         providers: [
           BlocProvider<NumberTriviaBloc>(create: (context) => sl<NumberTriviaBloc>()),
+          BlocProvider<InternetStatusBloc>(create: (context) => sl<InternetStatusBloc>()),
           BlocProvider<TextFormCubit>(create: (context) => TextFormCubit()),
         ],
         child: _buildBody(context),
@@ -31,13 +33,24 @@ class NumberTriviaPage extends StatelessWidget {
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: const [
-            OutputArea(),
-            InputArea(),
-          ],
-        ),
+        child: Builder(builder: (context) {
+          context.read<InternetStatusBloc>().add(StartListening());
+
+          return BlocListener<InternetStatusBloc, InternetStatusState>(
+            listener: (context, state) {
+              if (state is InternetStatusDisconnected) print(state);
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(const SnackBar(content: Text('No Internet Connection...')));
+            },
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: const [
+                OutputArea(),
+                InputArea(),
+              ],
+            ),
+          );
+        }),
       ),
     );
   }

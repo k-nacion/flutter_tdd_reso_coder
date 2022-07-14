@@ -5,6 +5,7 @@ import 'package:flutter_tdd_reso_coder/trivia/data/data_sources/remote_data_sour
 import 'package:flutter_tdd_reso_coder/trivia/data/repositories/number_trivia_repository_impl.dart';
 import 'package:flutter_tdd_reso_coder/trivia/domain/use_cases/get_concrete_number_trivia_use_case.dart';
 import 'package:flutter_tdd_reso_coder/trivia/domain/use_cases/get_random_number_trivia_use_case.dart';
+import 'package:flutter_tdd_reso_coder/trivia/presentation/bloc/internet_status/internet_status_bloc.dart';
 import 'package:flutter_tdd_reso_coder/trivia/presentation/bloc/number_trivia/number_trivia_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
@@ -21,6 +22,7 @@ Future<void> init() async {
         getRandomNumberTriviaUseCase: sl<GetRandomNumberTriviaUseCase>(),
         inputConverter: sl<InputConverter>()),
   );
+  sl.registerFactory(() => InternetStatusBloc(networkInfo: sl<NetworkInfoImpl>()));
 
   //use cases
   sl.registerLazySingleton(() => GetConcreteNumberTriviaUseCase(sl<NumberTriviaRepositoryImpl>()));
