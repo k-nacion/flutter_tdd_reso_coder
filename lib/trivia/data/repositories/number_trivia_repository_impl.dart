@@ -22,15 +22,12 @@ class NumberTriviaRepositoryImpl extends NumberTriviaRepository {
         _remoteDataSource = remoteDataSource;
 
   @override
-  Future<Either<Failure, NumberTrivia>> getConcreteNumberTrivia(
-          int num) async =>
-      await _delegateRepositoryCaller(
-          () => _remoteDataSource.getConcreteNumberTrivia(num));
+  Future<Either<Failure, NumberTrivia>> getConcreteNumberTrivia(int num) async =>
+      await _delegateRepositoryCaller(() => _remoteDataSource.getConcreteNumberTrivia(num));
 
   @override
   Future<Either<Failure, NumberTrivia>> getRandomNumberTrivia() async =>
-      await _delegateRepositoryCaller(
-          () => _remoteDataSource.getRandomNumberTrivia());
+      await _delegateRepositoryCaller(() => _remoteDataSource.getRandomNumberTrivia());
 
   Future<Either<Failure, NumberTrivia>> _delegateRepositoryCaller(
       Future<NumberTriviaModel> Function() body) async {
@@ -47,7 +44,7 @@ class NumberTriviaRepositoryImpl extends NumberTriviaRepository {
         return const Left((ServerFailure()));
       }
     } on CachedException {
-      return const Left(CachedFailure());
+      return const Left(CacheFailure());
     }
   }
 }

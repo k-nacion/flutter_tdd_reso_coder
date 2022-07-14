@@ -6,8 +6,7 @@ import 'package:flutter_tdd_reso_coder/trivia/domain/use_cases/get_concrete_numb
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-class MockNumberTriviaRepository extends Mock
-    implements NumberTriviaRepository {}
+class MockNumberTriviaRepository extends Mock implements NumberTriviaRepository {}
 
 void main() {
   group('GetConcreteNumberTriviaUseCase', () {
@@ -20,7 +19,7 @@ void main() {
     });
 
     const Either<Failure, NumberTrivia> tNumberTrivia =
-        Right(NumberTrivia(text: 'sample', number: 1));
+        Right(NumberTrivia(trivia: 'sample', number: 1));
     const tNumber = 1;
     test(
       'should return NumberTrivia successfully from the repository',
@@ -31,9 +30,7 @@ void main() {
         final actualResult = await useCaseSUT(tNumber);
 
         expect(actualResult, tNumberTrivia);
-        verify(() =>
-                mockNumberTriviaRepository.getConcreteNumberTrivia(tNumber))
-            .called(1);
+        verify(() => mockNumberTriviaRepository.getConcreteNumberTrivia(tNumber)).called(1);
         verifyNever(() => mockNumberTriviaRepository.getRandomNumberTrivia());
         verifyNoMoreInteractions(mockNumberTriviaRepository);
       },

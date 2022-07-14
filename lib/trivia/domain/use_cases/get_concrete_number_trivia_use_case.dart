@@ -9,6 +9,13 @@ class GetConcreteNumberTriviaUseCase extends UseCase<NumberTrivia, int> {
 
   const GetConcreteNumberTriviaUseCase(this._repository);
 
+  ///Fetches a random trivia.
+  ///
+  /// Returns [ServerFailure] if connection in the internet failed.
+  ///
+  /// Returns [CacheFailure] if unsuccessful on caching or retrieving cached data.
+  ///
+  /// Returns [NumberTrivia] if successful.
   @override
   Future<Either<Failure, NumberTrivia>> call(int param) async {
     return await _repository.getConcreteNumberTrivia(param);

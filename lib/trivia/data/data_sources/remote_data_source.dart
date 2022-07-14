@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_tdd_reso_coder/core/error/exception.dart';
 import 'package:flutter_tdd_reso_coder/trivia/data/models/number_trivia_model.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
 const NUMBERS_API_URI_AUTHORITY = 'numbersapi.com';
 const NUMBERS_API_URI_RANDOM_TRIVIA = 'random/trivia';
@@ -15,10 +15,10 @@ abstract class RemoteDataSource {
 }
 
 class RemoteDataSourceImpl implements RemoteDataSource {
-  final http.Client _client;
+  final Client _client;
 
   const RemoteDataSourceImpl({
-    required http.Client client,
+    required Client client,
   }) : _client = client;
 
   @override
@@ -36,7 +36,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       final parsedResult = await _client.read(uri, headers: NUMBERS_API_HEADER);
 
       return NumberTriviaModel.fromMap(jsonDecode(parsedResult));
-    } on http.ClientException {
+    } on ClientException {
       throw ServerException();
     }
   }

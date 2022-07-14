@@ -9,7 +9,7 @@ import '../../../../fixtures/fixtures.dart';
 class MockNumberTriviaModel extends Mock implements NumberTriviaModel {}
 
 void main() {
-  const tNumberTriviaModel = NumberTriviaModel(text: 'sample', number: 1);
+  const tNumberTriviaModel = NumberTriviaModel(trivia: 'sample', number: 1);
 
   group('NumberTriviaModel', () {
     test(
@@ -62,7 +62,7 @@ void main() {
       test(
         'should return a copy of the current NumberTriviaModel object when new number parameter is provided',
         () async {
-          const expectation = NumberTriviaModel(text: 'sample', number: 2);
+          const expectation = NumberTriviaModel(trivia: 'sample', number: 2);
 
           final actual = tNumberTriviaModel.copyWith(number: 2);
 
@@ -74,9 +74,9 @@ void main() {
       test(
         'should return a copy of the current NumberTriviaModel object when new text parameter is provided.',
         () async {
-          const expectation = NumberTriviaModel(text: 'test', number: 1);
+          const expectation = NumberTriviaModel(trivia: 'test', number: 1);
 
-          final actual = tNumberTriviaModel.copyWith(text: 'test');
+          final actual = tNumberTriviaModel.copyWith(trivia: 'test');
 
           expect(actual, expectation);
           expect(identical(actual, expectation), false);

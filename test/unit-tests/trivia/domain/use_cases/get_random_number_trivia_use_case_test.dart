@@ -6,8 +6,7 @@ import 'package:flutter_tdd_reso_coder/trivia/domain/use_cases/get_random_number
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-class MockNumberTriviaRepository extends Mock
-    implements NumberTriviaRepository {}
+class MockNumberTriviaRepository extends Mock implements NumberTriviaRepository {}
 
 void main() {
   group('GetRandomNumberTriviaUseCase', () {
@@ -20,7 +19,7 @@ void main() {
     });
 
     const Either<Failure, NumberTrivia> tNumberTrivia =
-        Right(NumberTrivia(number: 1, text: 'sample'));
+        Right(NumberTrivia(number: 1, trivia: 'sample'));
 
     test(
       'should return a NumberTrivia object after successful fetch of data',
@@ -31,10 +30,8 @@ void main() {
         final actualResult = await useCaseSUT();
 
         expect(actualResult, tNumberTrivia);
-        verify(() => mockNumberTriviaRepository.getRandomNumberTrivia())
-            .called(1);
-        verifyNever(
-            () => mockNumberTriviaRepository.getConcreteNumberTrivia(any()));
+        verify(() => mockNumberTriviaRepository.getRandomNumberTrivia()).called(1);
+        verifyNever(() => mockNumberTriviaRepository.getConcreteNumberTrivia(any()));
         verifyNoMoreInteractions(mockNumberTriviaRepository);
       },
     );

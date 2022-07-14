@@ -8,14 +8,18 @@ abstract class NumberTriviaRepository {
   ///Fetches a random trivia.
   ///
   /// Returns [ServerFailure] if connection in the internet failed.
-  /// Returns [CachedFailure] if unsuccessful on caching or retrieving cached data.
+  ///
+  /// Returns [CacheFailure] if unsuccessful on caching or retrieving cached data.
+  ///
   /// Returns [NumberTrivia] if successful.
   Future<Either<Failure, NumberTrivia>> getRandomNumberTrivia();
 
   ///Fetches a random trivia.
   ///
   /// Returns [ServerFailure] if connection in the internet failed.
-  /// Returns [CachedFailure] if unsuccessful on caching or retrieving cached data.
+  ///
+  /// Returns [CacheFailure] if unsuccessful on caching or retrieving cached data.
+  ///
   /// Returns [NumberTrivia] if successful.
   Future<Either<Failure, NumberTrivia>> getConcreteNumberTrivia(int num);
 }

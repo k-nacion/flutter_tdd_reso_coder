@@ -9,8 +9,8 @@ abstract class Failure extends Equatable {
   List<Object?> get props => [message];
 }
 
-class CachedFailure extends Failure {
-  const CachedFailure([super.message]);
+class CacheFailure extends Failure {
+  const CacheFailure([super.message]);
 
   @override
   String toString() {
