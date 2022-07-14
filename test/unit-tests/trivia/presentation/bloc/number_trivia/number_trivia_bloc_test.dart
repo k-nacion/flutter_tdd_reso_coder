@@ -102,6 +102,7 @@ void main() {
                 ]));
             await untilCalled(() => mockInputConverter.stringToUnsignedInt(any()));
             verify(() => mockInputConverter.stringToUnsignedInt(any()));
+            await untilCalled(() => mockGetConcreteNumberTriviaUseCase(any()));
             verify(() => mockGetConcreteNumberTriviaUseCase.call(any()));
             verifyZeroInteractions(mockGetRandomNumberTriviaUseCase);
           },
@@ -171,6 +172,7 @@ void main() {
                 ]));
             await untilCalled(() => mockInputConverter.stringToUnsignedInt(tValidNumber));
             verify(() => mockInputConverter.stringToUnsignedInt(tValidNumber));
+            await untilCalled(() => mockGetConcreteNumberTriviaUseCase(any()));
             verify(() => mockGetConcreteNumberTriviaUseCase.call(1));
             verifyZeroInteractions(mockGetRandomNumberTriviaUseCase);
           },

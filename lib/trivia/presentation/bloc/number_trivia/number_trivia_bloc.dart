@@ -38,7 +38,6 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
     final eventString = event.numberInput;
 
     final inputConverterResult = inputConverter.stringToUnsignedInt(eventString);
-    print('emit.isDone: ${emit.isDone}');
 
     await inputConverterResult.fold(
         (l) => Future(
@@ -58,8 +57,6 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
               }, (r) async {
                 emit(NumberTriviaStateLoaded(number: r.number.toString(), trivia: r.trivia));
               });
-
-              emit.isDone;
             }));
   }
 
@@ -69,16 +66,12 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
   ) async {
     emit(const NumberTriviaStateLoading());
     final triviaOrFailure = await _getRandomNumberTrivia();
-    print('emit.isDone: ${emit.isDone}');
 
     triviaOrFailure.fold((l) {
       if (l is ServerFailure) emit(const NumberTriviaStateError(SERVER_FAILURE_MESSAGE));
       if (l is CacheFailure) emit(const NumberTriviaStateError(CACHE_FAILURE_MESSAGE));
     }, (r) {
-      print('emit.isDone: ${emit.isDone}');
-
       emit(NumberTriviaStateLoaded(number: r.number.toString(), trivia: r.trivia));
-      print('emit.isDone: ${emit.isDone}');
     });
   }
 }
